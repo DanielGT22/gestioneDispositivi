@@ -2,6 +2,7 @@ package danielgrujic.gestioneDispositivi.services;
 
 import danielgrujic.gestioneDispositivi.entities.Dispositivo;
 import danielgrujic.gestioneDispositivi.entities.Utente;
+import danielgrujic.gestioneDispositivi.exceptions.BadRequestException;
 import danielgrujic.gestioneDispositivi.exceptions.NotFoundException;
 import danielgrujic.gestioneDispositivi.payloads.dispositivi.NewDIspositivoPayload;
 import danielgrujic.gestioneDispositivi.repositories.DispositivoRepository;
@@ -20,11 +21,24 @@ public class DispositivoService {
 
 
     public Dispositivo save (NewDIspositivoPayload body){
-        Utente utente = utenteService.findById(body.utenteId());
+
+        Utente utente;
+
+        if (body.utenteId() != null) {
+            utente = utenteService.findById(body.utenteId());
+        } else {
+            utente = new Utente();
+            utente.setId(0);
+        }
+
+     //   Utente utente = utenteService.findById(body.utenteId());
+
+
         Dispositivo nuovoDispositivo = new Dispositivo();
         nuovoDispositivo.setTipo(body.tipo());
         nuovoDispositivo.setDisponibile(body.disponibile());
         nuovoDispositivo.setUtente(utente);
+
         return dispositivoRepository.save(nuovoDispositivo);
 
 
@@ -44,10 +58,13 @@ public class DispositivoService {
         Dispositivo trovato = this.findById(id);
 
         trovato.setDisponibile(body.disponibile());
-        if(trovato.getUtente().getId()!= body.utenteId()) {
-            Utente newUtente = utenteService.findById(body.utenteId());
-            trovato.setUtente(newUtente);
+        if (body.utenteId() == null) {
+            trovato.getUtente().setId(0);
         }
+        if (trovato.getUtente().getId() != body.utenteId()) {
+                Utente newUtente = utenteService.findById(body.utenteId());
+                trovato.setUtente(newUtente);
+            }
 
 
 

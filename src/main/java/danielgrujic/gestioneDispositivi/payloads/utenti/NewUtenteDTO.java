@@ -11,10 +11,10 @@ public record NewUtenteDTO(
     @NotEmpty(message = "Il cognome è obbligatorio")
     String cognome,
     @NotEmpty(message = "L'email è obbligatoria")
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "L'email non valida")
+    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", message = "L'email  non valida")
     String email,
     @NotEmpty(message = "Il username è obbligatorio")
-    @Size(min = 2, max = 10, message = "Username non valido ")
+    @Size(min = 1, max = 10, message = "Username non valido ")
     String username
 ){
 }

@@ -1,4 +1,56 @@
 package danielgrujic.gestioneDispositivi.controllers;
 
+import danielgrujic.gestioneDispositivi.entities.Utente;
+import danielgrujic.gestioneDispositivi.exceptions.BadRequestException;
+import danielgrujic.gestioneDispositivi.payloads.utenti.NewUtenteDTO;
+import danielgrujic.gestioneDispositivi.payloads.utenti.NewUtenteResponseDTO;
+import danielgrujic.gestioneDispositivi.services.UtenteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/utenti")
 public class UtenteController {
+
+    @Autowired
+    UtenteService utenteService;
+    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewUtenteResponseDTO saveUtente(@RequestBody @Validated NewUtenteDTO body, BindingResult validation) throws Exception {
+        if (validation.hasErrors()) {
+            throw new BadRequestException(validation.getAllErrors());
+        }
+        Utente newUtente = utenteService.save(body);
+        return new NewUtenteResponseDTO(newUtente.getId());
+    }
+
+    @GetMapping("")
+    public Page<Utente> getUtente(@RequestParam(defaultValue = "0") int pagina,
+                                   @RequestParam(defaultValue = "10") int elementi, @RequestParam(defaultValue = "id") String sortBy) {
+        return utenteService.getUtenti(pagina, elementi, sortBy);
+    }
+
+    @GetMapping("/{utenteId}")
+    public Utente findById(@PathVariable int utenteId) {
+        return utenteService.findById(utenteId);
+    }
+
+    @PutMapping("/{utenteId}")
+    public Utente findAndUpdate(@PathVariable int utenteId, @RequestBody Utente body) {
+        return utenteService.findByIdAndUpdate(utenteId, body);
+    }
+
+    @DeleteMapping("/{utenteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) //
+    public void findAndDelete(@PathVariable int utenteId) {
+        utenteService.findByIdAndDelete(utenteId);
+    }
+
+
+
+
 }

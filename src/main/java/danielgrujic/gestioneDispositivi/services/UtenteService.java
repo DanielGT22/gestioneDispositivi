@@ -19,11 +19,19 @@ public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    public Utente save(Utente body) throws IOException {
-        utenteRepository.findByUsername(body.getUsername()).ifPresent( user -> {
-            throw new BadRequestException("Il username " +  body.getUsername() + "è già associato a un altro utente");
+    public Utente save(NewUtenteDTO body) throws IOException {
+        utenteRepository.findByUsername(body.username()).ifPresent( user -> {
+            throw new BadRequestException("Il username " +  body.username() + "è già associato ad un altro utente");
         });
-        return utenteRepository.save(body);
+        utenteRepository.findByEmail(body.email()).ifPresent( user -> {
+            throw new BadRequestException("La mail  " +  body.email() + "è già associato ad un altro utente");
+        });
+        Utente newUtente = new Utente();
+        newUtente.setNome(body.nome());
+        newUtente.setCognome(body.cognome());
+        newUtente.setEmail(body.email());
+        newUtente.setUsername(body.username());
+        return utenteRepository.save(newUtente);
 
     }
 

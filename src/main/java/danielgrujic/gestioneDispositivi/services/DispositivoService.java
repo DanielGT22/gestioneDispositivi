@@ -58,6 +58,9 @@ public class DispositivoService {
         Utente utente = utenteService.findById(utenteId);
         return dispositivoRepository.findByUtente(utente);
     }
+    public List<Dispositivo> getDispositivo() {
+        return dispositivoRepository.findAll();
+    }
 
 
 }

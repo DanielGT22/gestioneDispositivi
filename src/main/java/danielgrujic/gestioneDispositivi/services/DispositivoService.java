@@ -20,10 +20,10 @@ public class DispositivoService {
 
 
     public Dispositivo save (NewDIspositivoPayload body){
-        Utente utente = utenteService.findById(body.getUtenteId());
+        Utente utente = utenteService.findById(body.utenteId());
         Dispositivo nuovoDispositivo = new Dispositivo();
-        nuovoDispositivo.setTipo(body.getTipo());
-        nuovoDispositivo.setDisponibile(body.getDisponibile());
+        nuovoDispositivo.setTipo(body.tipo());
+        nuovoDispositivo.setDisponibile(body.disponibile());
         nuovoDispositivo.setUtente(utente);
         return dispositivoRepository.save(nuovoDispositivo);
 
@@ -43,9 +43,9 @@ public class DispositivoService {
     public Dispositivo findByIdAndUpdate(int id, NewDIspositivoPayload body) {
         Dispositivo trovato = this.findById(id);
 
-        trovato.setDisponibile(body.getDisponibile());
-        if(trovato.getUtente().getId()!= body.getUtenteId()) {
-            Utente newUtente = utenteService.findById(body.getUtenteId());
+        trovato.setDisponibile(body.disponibile());
+        if(trovato.getUtente().getId()!= body.utenteId()) {
+            Utente newUtente = utenteService.findById(body.utenteId());
             trovato.setUtente(newUtente);
         }
 

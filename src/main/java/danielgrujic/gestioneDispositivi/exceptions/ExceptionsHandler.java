@@ -1,5 +1,6 @@
 package danielgrujic.gestioneDispositivi.exceptions;
 
+import danielgrujic.gestioneDispositivi.payloads.errors.ErrorsPayloadWithList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionsHandler {
+
 
 	@ExceptionHandler(BadRequestException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

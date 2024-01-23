@@ -9,8 +9,12 @@ import danielgrujic.gestioneDispositivi.payloads.utenti.NewUtenteResponseDTO;
 import danielgrujic.gestioneDispositivi.services.AuthService;
 import danielgrujic.gestioneDispositivi.services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,13 +32,13 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public NewUserResponseDTO createUser(@RequestBody @Validated NewUtenteDTO newUserPayload, BindingResult validation) {
+    public NewUtenteResponseDTO createUser(@RequestBody @Validated NewUtenteDTO newUtentePayload, BindingResult validation)  {
         System.out.println(validation);
         if (validation.hasErrors()) {
             System.out.println(validation.getAllErrors());
             throw new BadRequestException("Ci sono errori nel payload!");
         } else {
-            Utente newUtente = utenteService.save(newUserPayload);
+            Utente newUtente = utenteService.save(newUtentePayload);
 
             return new NewUtenteResponseDTO(newUtente.getId());
         }

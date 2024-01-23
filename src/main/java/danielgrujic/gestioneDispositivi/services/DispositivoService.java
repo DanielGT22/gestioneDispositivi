@@ -23,16 +23,17 @@ public class DispositivoService {
 
     public Dispositivo save (NewDIspositivoPayload body){
 
-        Utente utente;
+       /* Utente utente;
 
         if (body.utenteId() != null) {
             utente = utenteService.findById(body.utenteId());
-        } else {
-            utente = new Utente();
-            utente.setId(0);
         }
+        else {
+            utente = new Utente();
+            utente.setId("0");
+        } */
 
-     //   Utente utente = utenteService.findById(body.utenteId());
+      Utente utente = utenteService.findById(body.utenteId());
 
 
         Dispositivo nuovoDispositivo = new Dispositivo();
@@ -50,18 +51,18 @@ public class DispositivoService {
 
     }
 
-    public void findByIdAndDelete(int id) {
+    public void findByIdAndDelete(UUID id) {
         Dispositivo found = this.findById(id);
         dispositivoRepository.delete(found);
     }
 
-    public Dispositivo findByIdAndUpdate(int id, NewDIspositivoPayload body) {
+    public Dispositivo findByIdAndUpdate(UUID id, NewDIspositivoPayload body) {
         Dispositivo trovato = this.findById(id);
 
         trovato.setDisponibile(body.disponibile());
-        if (body.utenteId() == null) {
+        /* if (body.utenteId() == null) {
             trovato.getUtente().setId(0);
-        }
+        } */
         if (trovato.getUtente().getId() != body.utenteId()) {
                 Utente newUtente = utenteService.findById(body.utenteId());
                 trovato.setUtente(newUtente);
@@ -72,7 +73,7 @@ public class DispositivoService {
         return dispositivoRepository.save(trovato);
     }
 
-    public List<Dispositivo> findByUtente(int utenteId){
+    public List<Dispositivo> findByUtente(UUID utenteId){
         Utente utente = utenteService.findById(utenteId);
         return dispositivoRepository.findByUtente(utente);
     }

@@ -20,7 +20,7 @@ public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
 
-    public Utente save(NewUtenteDTO body) throws IOException {
+    public Utente save(NewUtenteDTO body){
         utenteRepository.findByUsername(body.username()).ifPresent( user -> {
             throw new BadRequestException("Il username " +  body.username() + "è già associato ad un altro utente");
         });

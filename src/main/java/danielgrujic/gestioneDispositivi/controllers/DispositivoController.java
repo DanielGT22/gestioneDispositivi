@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/dispositivo")
@@ -30,19 +31,19 @@ public class DispositivoController {
     }
 
     @GetMapping("/{dispositivoId}")
-    public Dispositivo findById(@PathVariable int dispositivoId) throws Exception {
+    public Dispositivo findById(@PathVariable UUID dispositivoId) throws Exception {
         return dispositivoService.findById(dispositivoId);
     }
 
     @PutMapping("/{dispositivoId}")
-    public Dispositivo findAndUpdate(@PathVariable int dispositivoId, @RequestBody NewDIspositivoPayload body) throws Exception {
+    public Dispositivo findAndUpdate(@PathVariable UUID dispositivoId, @RequestBody NewDIspositivoPayload body) throws Exception {
         return dispositivoService.findByIdAndUpdate(dispositivoId, body);
     }
 
 
     @DeleteMapping("/{dispositivoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void findAndDelete(@PathVariable int dispositivoId) {
+    public void findAndDelete(@PathVariable UUID dispositivoId) {
         dispositivoService.findByIdAndDelete(dispositivoId);
     }
 

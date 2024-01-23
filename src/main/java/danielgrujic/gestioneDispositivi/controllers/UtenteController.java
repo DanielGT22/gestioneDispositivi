@@ -8,6 +8,7 @@ import danielgrujic.gestioneDispositivi.services.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,21 @@ public class UtenteController {
     }
 
 
+    @GetMapping("/me")
+    public Utente getProfile(@AuthenticationPrincipal Utente currentUser) {
+        return currentUser;
+    }
+
+
+    @PutMapping("/me")
+    public Utente getMeAndUpdate(@AuthenticationPrincipal Utente currentUser, @RequestBody Utente body) {
+        return utenteService.findByIdAndUpdate(currentUser.getId(), body);
+    }
+
+    @DeleteMapping("/me")
+    public void getMeAnDelete(@AuthenticationPrincipal Utente currentUser) {
+        utenteService.findByIdAndDelete(currentUser.getId());
+    }
 
 
 }

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 public class UtenteService {
@@ -31,6 +32,7 @@ public class UtenteService {
         newUtente.setCognome(body.cognome());
         newUtente.setEmail(body.email());
         newUtente.setUsername(body.username());
+        newUtente.setPassword(body.password());
         return utenteRepository.save(newUtente);
 
     }
@@ -40,17 +42,17 @@ public class UtenteService {
         return utenteRepository.findAll(pageable);
     }
 
-    public Utente findById(int id ){
+    public Utente findById(UUID id ){
         return utenteRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
 
-    public void findByIdAndDelete(int id) {
+    public void findByIdAndDelete(UUID id) {
         Utente trovato = this.findById(id);
         utenteRepository.delete(trovato);
     }
 
-    public Utente findByIdAndUpdate(int id, Utente body) {
+    public Utente findByIdAndUpdate(UUID id, Utente body) {
         Utente trovato = this.findById(id);
         trovato.setNome(body.getNome());
         trovato.setCognome(body.getCognome());
@@ -58,5 +60,7 @@ public class UtenteService {
         trovato.setUsername(body.getUsername());
         return utenteRepository.save(trovato);
     }
-
+    public Utente findByEmail(String email) throws NotFoundException {
+        return utenteRepository.findByEmail(email).orElseThrow(() -> new NotFoundException("Utente con email " + email + " non trovata!"));
+    }
 }

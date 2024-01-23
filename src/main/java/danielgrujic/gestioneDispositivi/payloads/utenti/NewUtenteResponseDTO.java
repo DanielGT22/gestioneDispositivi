@@ -1,4 +1,6 @@
 package danielgrujic.gestioneDispositivi.payloads.utenti;
 
-public record NewUtenteResponseDTO(int id) {
+import java.util.UUID;
+
+public record NewUtenteResponseDTO(UUID id) {
 }

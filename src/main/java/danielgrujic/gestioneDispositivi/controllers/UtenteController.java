@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/utenti")
 public class UtenteController {
@@ -35,18 +37,18 @@ public class UtenteController {
     }
 
     @GetMapping("/{utenteId}")
-    public Utente findById(@PathVariable int utenteId) {
+    public Utente findById(@PathVariable UUID utenteId) {
         return utenteService.findById(utenteId);
     }
 
     @PutMapping("/{utenteId}")
-    public Utente findAndUpdate(@PathVariable int utenteId, @RequestBody Utente body) {
+    public Utente findAndUpdate(@PathVariable UUID utenteId, @RequestBody Utente body) {
         return utenteService.findByIdAndUpdate(utenteId, body);
     }
 
     @DeleteMapping("/{utenteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT) //
-    public void findAndDelete(@PathVariable int utenteId) {
+    public void findAndDelete(@PathVariable UUID utenteId) {
         utenteService.findByIdAndDelete(utenteId);
     }
 

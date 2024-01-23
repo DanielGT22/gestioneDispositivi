@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ToString
@@ -12,13 +14,13 @@ import lombok.ToString;
 @Table(name = "utente")
 public class Utente {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    @GeneratedValue
+    private UUID id;
     private String nome;
     private String cognome;
     private String email;
     private String username;
-
+    private String password;
 
 
 }

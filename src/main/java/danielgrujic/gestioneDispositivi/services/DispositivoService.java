@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DispositivoService {
@@ -43,7 +44,7 @@ public class DispositivoService {
 
 
     }
-    public Dispositivo findById(int id ){
+    public Dispositivo findById(UUID id ){
         return dispositivoRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
 
 
